@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiApp1.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MauiApp1.ViewModel"
+    x:DataType="vm:MainViewModel">
+    <Grid
+        Padding="10"
+        ColumnDefinitions=".75*,.25*"
+        ColumnSpacing="10"
+        RowDefinitions="100,Auto,*"
+        RowSpacing="10">
+        <Image Grid.ColumnSpan="2" Source="hhh.png" />
+        <Entry
+            Grid.Row="1"
+            Placeholder="Entry Task"
+            Text="{Binding Text}" />
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            Command="{Binding AddCommand}"
+            Text="Add" />
+
+        <CollectionView
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding TodoItems}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type x:String}">
+                    <SwipeView Margin="0,5">
+                        <SwipeView.RightItems>
+                            <SwipeItem
+                                BackgroundColor="red"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=RemoveCommand}"
+                                CommandParameter="{Binding .}"
+                                Text="Delete" />
+                        </SwipeView.RightItems>
+                        <Grid>
+                            <Frame>
+                                <Label FontSize="18" Text="{Binding .}" />
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </Grid>
+</ContentPage>
